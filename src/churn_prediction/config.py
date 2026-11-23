@@ -9,7 +9,7 @@ class Config:
     ID_COLUMN: str = "customerID"
 
     #threshold 
-    THRESHOLD : float = 0.40
+    THRESHOLD : float = 0.30
 
 
 

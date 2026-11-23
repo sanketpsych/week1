@@ -16,6 +16,7 @@ from sklearn.linear_model import LogisticRegression
 from churn_prediction.config import config
 from churn_prediction.logger import logger
 from churn_prediction.exception import TraingError
+from sklearn.model_selection import GridSearchCV
 
 
 def train_model(X_train, y_train):
@@ -47,12 +48,31 @@ def train_model(X_train, y_train):
                 )
             )
         ])
+        #grid search hyper parameter tuning
+        param_grid ={
+            "classifer__c" : [0.01 , 0.1 , 1, 10],
+            "classifer__solver" : [
+                "liblinear",
+                "lbfgs"
+            ]
+
+        }
+        grid_search = GridSearchCV(
+            estimator=model,
+            param_grid=param_grid,
+            cv=5,
+            scoring="recall",
+            n_jobs=1
+        )
+
 
         # Train complete pipeline
-        model.fit(
+        grid_search.fit(
             X_train,
             y_train
         )
+        best_modal = grid_search.best_estimator_
+
 
         logger.info(
             "Model training completed"
@@ -68,7 +88,7 @@ def train_model(X_train, y_train):
             f"Model saved at {config.MODEL_PATH}"
         )
 
-        return model
+        return best_modal
 
     except Exception as e:
 
