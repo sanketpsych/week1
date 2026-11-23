@@ -14,7 +14,7 @@ from sklearn.metrics import (
 )
 
 from churn_prediction.config import config
-from churn_prediction.exception import EvaluationError
+from churn_prediction.exceptions import EvaluationError
 from churn_prediction.logger import logger
 
 
