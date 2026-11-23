@@ -1,10 +1,9 @@
-
-
 import json
 
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+
 from sklearn.metrics import (
     accuracy_score,
     classification_report,
@@ -15,23 +14,34 @@ from sklearn.metrics import (
 )
 
 from churn_prediction.config import config
-from churn_prediction.exception import EvaluationError
+from churn_prediction.exceptions import EvaluationError
 from churn_prediction.logger import logger
 
 
 def evaluate_model(model, X_test, y_test):
- 
+    """
+    Evaluate trained model using a custom threshold.
+    """
+
     try:
+
         logger.info(
             "Starting model evaluation..."
         )
 
-        # Generate predictions
-       
-        y_pred = model.predict(X_test)
+        logger.info(
+            f"Using threshold: {config.THRESHOLD}"
+        )
+
+        # Generate prediction probabilities
+        y_prob = model.predict_proba(X_test)[:, 1]
+
+        # Apply threshold
+        y_pred = (
+            y_prob >= config.THRESHOLD
+        ).astype(int)
 
         # Calculate metrics
-   
         accuracy = accuracy_score(
             y_test,
             y_pred
@@ -53,17 +63,15 @@ def evaluate_model(model, X_test, y_test):
         )
 
         # Store metrics
-
         metrics = {
+            "threshold": config.THRESHOLD,
             "accuracy": accuracy,
             "precision": precision,
             "recall": recall,
-            "f1_score": f1
+            "f1_score": f1,
         }
 
-        # Save metrics.json
- 
-
+        # Save metrics
         with open(
             config.METRICS_PATH,
             "w"
@@ -79,14 +87,12 @@ def evaluate_model(model, X_test, y_test):
             "Metrics saved successfully"
         )
 
-
-        # Save predictions.csv
-
-
+        # Save predictions
         predictions_df = pd.DataFrame(
             {
                 "Actual": y_test,
-                "Predicted": y_pred
+                "Predicted": y_pred,
+                "Probability": y_prob
             }
         )
 
@@ -99,9 +105,7 @@ def evaluate_model(model, X_test, y_test):
             "Predictions saved successfully"
         )
 
-       
-        # Classification report
-     
+        # Classification Report
         report = classification_report(
             y_test,
             y_pred
@@ -118,10 +122,7 @@ def evaluate_model(model, X_test, y_test):
             "Classification report saved"
         )
 
-   
-        # Confusion matrix
-
-
+        # Confusion Matrix
         cm = confusion_matrix(
             y_test,
             y_pred
@@ -137,7 +138,7 @@ def evaluate_model(model, X_test, y_test):
         )
 
         plt.title(
-            "Confusion Matrix"
+            f"Confusion Matrix (Threshold={config.THRESHOLD})"
         )
 
         plt.xlabel(
@@ -160,6 +161,18 @@ def evaluate_model(model, X_test, y_test):
 
         logger.info(
             f"Accuracy: {accuracy:.4f}"
+        )
+
+        logger.info(
+            f"Precision: {precision:.4f}"
+        )
+
+        logger.info(
+            f"Recall: {recall:.4f}"
+        )
+
+        logger.info(
+            f"F1 Score: {f1:.4f}"
         )
 
         return metrics

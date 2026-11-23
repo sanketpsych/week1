@@ -8,7 +8,12 @@ class Config:
     TARGET_COLUMN: str = "Churn"
     ID_COLUMN: str = "customerID"
 
-    # Columns that leak the outcome (dropped if present)
+    #threshold 
+    THRESHOLD : float = 0.40
+
+
+
+    # Columns that leak the outcome 
     LEAKAGE_COLUMNS: tuple = (
         "Churn Reason",
         "Churn Score",
