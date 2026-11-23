@@ -49,28 +49,30 @@ def train_model(X_train, y_train):
             )
         ])
         #grid search hyper parameter tuning
-        param_grid ={
-            "classifer__c" : [0.01 , 0.1 , 1, 10],
-            "classifer__solver" : [
-                "liblinear",
-                "lbfgs"
-            ]
+        param_grid = {
+    "classifier__C": [0.01, 0.1, 1, 10],
+    "classifier__solver": [
+        "liblinear",
+        "lbfgs"
+    ]
+}
+        
 
-        }
+        
         grid_search = GridSearchCV(
             estimator=model,
             param_grid=param_grid,
             cv=5,
-            scoring="recall",
+            scoring="f1",
             n_jobs=1
         )
-
-
+        logger.info("starting gridsearchcv")
         # Train complete pipeline
         grid_search.fit(
             X_train,
             y_train
         )
+        logger.info("gridSearchcv completed")
         modal = grid_search.best_estimator_
 
 
