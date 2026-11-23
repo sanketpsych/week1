@@ -28,7 +28,7 @@ The project uses **Logistic Regression** to identify potential churn customers a
 
 ## 4. Project Structure
 
-```text
+
 classification/
 │
 ├── data/                       # Dataset files
@@ -54,7 +54,7 @@ classification/
 ├── main.py                      # Main execution file
 ├── requirement.txt              # Project dependencies
 └── README.md                    # Project documentation
-```
+
 
 ## 5. Machine Learning Workflow
 
@@ -105,62 +105,59 @@ The model is evaluated using the following classification metrics:
 
 The following results were obtained using a classification threshold of **0.30**.
 
-| Metric | Score |
-|---|---:|
-| Accuracy | 70.33% |
+| Metric    | Score  |
+| Accuracy  | 70.33% |
 | Precision | 46.62% |
-| Recall | 83.11% |
-| F1-Score | 59.73% |
+| Recall    | 83.11% |
+| F1-Score  | 59.73% |
 
-**Classification Threshold:** 0.30
+Classification Threshold:0.30
 
 ## 9. Installation and Setup
 
 ### Step 1: Clone the Repository
 
-```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-```
+git clone https://github.com/sanketpsych/week1
 
 ### Step 2: Navigate to the Project Directory
 
-```bash
+
 cd classification
-```
+
 
 ### Step 3: Create a Virtual Environment
 
-```bash
+
 python3 -m venv .venv
-```
+
 
 ### Step 4: Activate the Virtual Environment
 
-```bash
+
 source .venv/bin/activate
-```
+
 
 ### Step 5: Install Dependencies
 
-```bash
+
 pip install -r requirement.txt
-```
+
 
 ## 10. Running the Project
 
 Execute the main file:
 
-```bash
+
 python main.py
-```
+
 
 ## 11. Running Tests
 
 Run the test cases using Pytest:
 
-```bash
+
 pytest test/
-```
+
 
 ## 12. Future Improvements
 
