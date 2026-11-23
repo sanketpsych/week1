@@ -28,7 +28,7 @@ The project uses **Logistic Regression** to identify potential churn customers a
 
 ## 4. Project Structure
 
-
+```text
 classification/
 │
 ├── data/                       # Dataset files
@@ -54,7 +54,7 @@ classification/
 ├── main.py                      # Main execution file
 ├── requirement.txt              # Project dependencies
 └── README.md                    # Project documentation
-
+```
 
 ## 5. Machine Learning Workflow
 
@@ -157,7 +157,7 @@ Run the test cases using Pytest:
 
 
 pytest test/
-
+```
 
 ## 12. Future Improvements
 
