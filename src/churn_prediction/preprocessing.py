@@ -14,8 +14,10 @@ def preprocess_data(df: pd.DataFrame):
 
         logger.info("Starting preprocessing")
         if "customerID" in df.columns:
+            #drop the column that doesnt improve the model decision
             df = df.drop(columns=["customerID"])
         df[config.TARGET_COLUMN] = (
+            #target variable encoding
             df[config.TARGET_COLUMN]
             .map(
                 {
@@ -25,6 +27,7 @@ def preprocess_data(df: pd.DataFrame):
             )
         )
         df = df.fillna(0)
+        #to convert categorical columns into a numerical binary columns
         df = pd.get_dummies(
             df,
             drop_first=True
