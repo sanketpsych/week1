@@ -71,7 +71,7 @@ def train_model(X_train, y_train):
             X_train,
             y_train
         )
-        best_modal = grid_search.best_estimator_
+        modal = grid_search.best_estimator_
 
 
         logger.info(
@@ -88,7 +88,7 @@ def train_model(X_train, y_train):
             f"Model saved at {config.MODEL_PATH}"
         )
 
-        return best_modal
+        return modal
 
     except Exception as e:
 
