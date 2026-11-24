@@ -17,6 +17,7 @@ from churn_prediction.config import config
 from churn_prediction.logger import logger
 from churn_prediction.exception import TraingError
 from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import (accuracy_score,recall_score)
 
 
 def train_model(X_train, y_train):
@@ -57,8 +58,6 @@ def train_model(X_train, y_train):
     ]
 }
         
-
-        
         grid_search = GridSearchCV(
             estimator=model,
             param_grid=param_grid,
@@ -75,6 +74,25 @@ def train_model(X_train, y_train):
         logger.info("gridSearchcv completed")
         modal = grid_search.best_estimator_
 
+        #training prediction 
+        y_train_pred = modal.predict(
+            X_train
+        )
+        #training metrix
+        train_accuracy = accuracy_score(
+            y_train,
+            y_train_pred
+        )
+        train_recall = recall_score(
+            y_train,
+            y_train_pred
+        )
+        logger.info(
+            f"train accuracy: {train_accuracy:.4f}"
+        )
+        logger.info(
+            f"train recall : {train_recall:.4f}"
+        )
 
         logger.info(
             "Model training completed"
