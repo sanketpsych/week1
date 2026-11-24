@@ -51,7 +51,8 @@ def preprocess_data(df: pd.DataFrame):
                 X,
                 y,
                 test_size=config.TEST_SIZE,
-                random_state=config.RANDOM_STATE
+                random_state=config.RANDOM_STATE,
+                stratify= y
             )
         )
 
