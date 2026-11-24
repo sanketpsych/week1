@@ -72,12 +72,19 @@ def train_model(X_train, y_train):
             y_train
         )
         logger.info("gridSearchcv completed")
-        modal = grid_search.best_estimator_
+        model = grid_search.best_estimator_
 
-        #training prediction 
-        y_train_pred = modal.predict(
+        #training prediction
+        y_train_prob = model.predict_proba(
             X_train
-        )
+        )[: , 1]
+
+        y_train_pred = (
+                y_train_prob >= config.THRESHOLD
+        ).astype(int)
+
+
+
         #training metrix
         train_accuracy = accuracy_score(
             y_train,
@@ -108,7 +115,7 @@ def train_model(X_train, y_train):
             f"Model saved at {config.MODEL_PATH}"
         )
 
-        return modal
+        return model
 
     except Exception as e:
 
